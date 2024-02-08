@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>4 Hibz <3</title>
+    <style>
+        body { 
+            font-family: 'Arial', sans-serif;
+            text-align: center;
+            background-color: #111;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+        }
+
+        h1 {
+            color: #e84a5f;
+            margin-bottom: 20px;
+            font-size: 40px;
+        }
+
+        button {
+            background-color: #e84a5f;
+            color: #111;
+            font-size: 18px;
+            padding: 12.5px 25px;
+            margin: 10px;
+            border: none;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+            border-radius: 15px;
+        }
+
+        button:hover {
+            background-color: #d0374c;
+        }
+
+        #buttons {
+            display: flex;
+            flex-direction: row;
+            justify-content: center;
+        }
+
+        #message {
+            display: none;
+            font-size: 20px;
+            margin-top: 20px;
+            color: #e84a5f;
+            animation: fadeInOut 4s ease-out;
+        }
+
+        @keyframes fadeInOut {
+            0% {
+                opacity: 0;
+            }
+            25% {
+                opacity: 1;
+            }
+            75% {
+                opacity: 1;
+            }
+            100% {
+                opacity: 0;
+            }
+        }
+        
+        #resetButton {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            background-color: #e84a5f;
+            color: #fff;
+            border: none;
+            border-radius: 5px;
+            padding: 10px 20px;
+            font-size: 16px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        #resetButton:hover {
+            background-color: #d0374c;
+        }
+
+    </style>
+</head>
+<body>
+    <h1>Will you be my Valentine?</h1>
+
+    <!-- Initial buttons -->
+    <div id="buttons">
+        <button onclick="answer('yes')" id="initialYesButton">Yes</button>
+        <button onclick="answer('no')">No</button>
+    </div>
+
+    <p id="message"></p>
+
+    <!-- Reset button -->
+    <button id="resetButton">Reset</button>
+
+    <script src="confetti.js"></script>
+    <script>
+        var yesButtonCount = 0;
+
+        function answer(response) {
+            var buttonsElement = document.getElementById("buttons");
+            var messageElement = document.getElementById("message");
+
+            if (response === 'no') {
+                // Add a new "Yes" button on the right if the limit is not reached
+                displayMessage('?');
+                if (yesButtonCount < 3) {
+                    var newYesButton = document.createElement('button');
+                    newYesButton.innerHTML = 'Yes';
+                    newYesButton.classList.add('additional-yes-button'); // Add a class to distinguish additional "Yes" buttons
+                    newYesButton.onclick = function() {
+                        displayMessage('never had a bitch like me in ur life 😏💘');
+                        poof();
+                    };
+                    buttonsElement.appendChild(newYesButton);
+                    yesButtonCount++;
+                }
+            } else {
+                // Display a message for the initial "Yes" button
+                displayMessage('never had a bitch like me in ur life 😏💘');
+                // Trigger confetti effect only when "Yes" is clicked
+                poof();
+            }
+
+            // You can add more logic here based on the 'response'
+        }
+
+        function displayMessage(msg) {
+            var messageElement = document.getElementById("message");
+            messageElement.innerHTML = msg;
+            messageElement.style.display = "block";
+
+            // Hide the message after 5 seconds
+            setTimeout(function () {
+                messageElement.style.display = "none";
+            }, 5000);
+        }
+
+        // Event listener for the reset button click
+        document.getElementById('resetButton').addEventListener('click', function () {
+            // Remove additional "Yes" buttons
+            var additionalYesButtons = document.querySelectorAll('.additional-yes-button');
+            additionalYesButtons.forEach(function (button) {
+                button.parentNode.removeChild(button);
+            });
+
+            // Reset the yes button count
+            yesButtonCount = 0;
+        });
+
+    </script>
+</body>
+</html>
